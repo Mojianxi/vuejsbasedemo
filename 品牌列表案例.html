@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>品牌列表案例</title>
+	<script type="text/javascript" src="./lib/vue-2.4.0.js"></script>
+	<link rel="stylesheet" type="text/css" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+	<div id="app">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">添加品牌</h3>
+			</div>
+			<div class="panel-body form-inline">
+				<label>Id:
+					<input type="text" class="form-control" v-model="id">
+				</label>
+				<label>
+					Name:
+					<input type="text"  class="form-control" v-model="name">
+				</label>
+				<!-- 在vue中绑定的方法可以加小括号传参 -->
+				<input type="button" value="添加" class="btn btn-primary" @click="add">
+				<label>
+					搜索名称关键字:
+					<input type="text" class="form-control" v-model="keywords">
+				</label>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Ctime</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr v-for="item in list" :key="item.id"> -->
+				<tr v-for="item in search(keywords)" :key="item.id">
+					<td>{{item.id}}</td>
+					<td v-text="item.name"></td>
+					<!-- 可以同时使用多个过滤器 -->
+					<!-- <td>{{item.ctime | dateFormat('yyy-mm-dd')}}</td> -->
+					<td>{{item.ctime | dateFormat('')}}</td>
+					<td><a href="" @click.prevent="del(item.id)">删除</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		//全局过滤器,进行时间格式化
+		Vue.filter('dateFormat',function(dateStr,pattern) {
+			var dt=new Date(dateStr);
+			var y=dt.getFullYear()
+			var m=dt.getMonth()+1;
+			var d=dt.getDate()
+			if(pattern&&pattern.toLowerCase()=='yyy-mm-dd'){
+				return y+'-'+m+'-'+d;
+			// return '${y}-${m}''
+		}else{
+			var hh=dt.getHours()
+			var mm=dt.getMinutes()
+			var ss=dt.getSeconds()
+			return `${y}-${m}-${d} ${hh}:${mm}"${ss}`
+		}
+			
+		})
+		var vm=new Vue({
+			// 可以使用vue过滤器过滤字符串,在mustachc和v-bind使用,格式{{name | filtername}}  字符串的replace方法替换正则/单纯/g
+			el:'#app',
+			data:{
+				id:'',
+				name:'',
+				keywords:'',
+				list:[
+					{id:1,name:'奔驰',ctime:new Date()},
+					{id:2,name:'宝马',ctime:new Date()},
+					{id:3,name:'法拉利',ctime:new Date()}
+				]
+			},
+			methods:{
+				add(){
+					var car={id:this.id,name:this.name,ctime:new Date()}
+					this.list.push(car)
+					this.id=this.name=''
+				},
+				del(id){//根据id删除数据
+					// this.list.some((item,i)=>{
+					// 	if(item.id==id){
+					// 		//在数组的some
+					// 		this.list.splice(i,1)
+					// 		return true;
+					// 	}
+					// })
+					var index=this.list.findIndex(item=>{
+						if(item.id==id){
+							return true;
+						}
+					})
+					// console.log(index);
+					this.list.splice(index,1);
+				},
+				search(keywords){
+					// var newList=[]
+					// this.list.forEach(item=>{
+					// 	if(item.name.indexOf(keywords)!=-1){
+					// 		newList.push(item);
+					// 	}
+					// })
+					// return newList;
+
+					return this.list.filter(item=>{
+						if(item.name.includes(keywords)){
+							return item;
+						}
+					})
+				}
+			}
+		});
+	</script>
+</body>
+</html>

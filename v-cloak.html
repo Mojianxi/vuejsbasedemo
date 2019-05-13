@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-cloak</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用v-cloak解决插值表达式闪烁问题 -->
+        <p v-cloak>{{msg}}</p>
+        <h4 v-text="msg"></h4>
+        <div v-html='msg2'></div>
+        <!-- v-bind可以省略,用:代替,v-on用@代替 -->
+        <input type="button" value="按钮" v-bind:title="mytitle+'123'" v-on:click="show">
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                msg:'123',
+                msg2:'<h1>哈哈哈我是h1</h1>',
+                mytitle:'这是自定义title'
+            },
+            methods:{//这个methods属性中定义了Vue实例可用的方法
+                show:function(){
+                    alert('hello');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

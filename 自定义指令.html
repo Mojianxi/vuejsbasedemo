@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义指令</title>
+	<script type="text/javascript" src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div v-color="'red'">自定义自动获取焦点的函数
+			{{msg}}
+			<input type="text" name="" id="" v-focus>
+		</div>
+	</div>
+	<script type="text/javascript">
+		Vue.directive('color',{
+			//钩子函数,第一个参数永远是el,是原生的js对象
+			bind:function(el,binding){
+				el.style.color=binding.value
+			},
+			inserted:function(el){
+
+			},
+			updated:function(el){}
+		});
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				msg:'数据'
+			}
+		})
+	</script>
+</body>
+</html>

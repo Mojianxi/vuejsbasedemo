@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+	<div id="app">
+		<p v-for="item in list">{{item}}</p>
+		<!-- (user,i) in list这里i代表索引, 在in后面可以放:普通数组,对象数组,对象,数字 -->
+		<p v-for="count in 10">这是第{{count}}次循环</p>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				list:[1,2,3,4,5]
+			},
+			methods:{}
+		})
+	</script>
+</body>
+</html>

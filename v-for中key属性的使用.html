@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-for中的key属性使用</title>
+	<script type="text/javascript" src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+	<div id="app">
+		<label>Id:
+			<input type="text" v-model="id">
+		</label>
+		<label>Name:
+			<input type="text" v-model="name">
+		</label>
+		<input type="button" value="添加" @click="add">
+		<p v-for='item in list' v-bind:key="item.id">
+			<input type="checkbox">
+			{{item.name}}
+		</p>
+
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				id:'',
+				name:'',
+				list:[
+					{id:1,name:'里斯'},
+					{id:2,name:'天宇'},
+					{id:3,name:'里奥'}
+				]
+			},
+			methods:{
+				add(){//添加方法
+					// this.list.push({id:this.id,name:this.name})
+					this.list.unshift({id:this.id,name:this.name})
+				}
+			}
+		});
+	</script>
+</body>
+</html>
