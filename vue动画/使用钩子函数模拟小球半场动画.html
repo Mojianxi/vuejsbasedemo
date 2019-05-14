@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用钩子函数实现模拟小球半场动画</title>
+	<script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+	<style type="text/css">
+		.ball{
+			width:15px;
+			height: 15px;
+			border-radius: 50%;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="加入购物车" @click="flag=!flag">
+		<transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+			<div class="ball" v-show="flag"></div>
+		</transition>
+	</div>
+	<script type="text/javascript">
+		Vue.directive('focus',function(el) {});//自定义指令
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				flag:false
+			},
+			methods:{
+				//动画钩子函数的第一个参数el表示,要执行动画的那个dom元素,是个原生的dom对象
+				beforeEnter(el){
+					//beforeEnter表示动画入场之前,此时动画尚未开始,可以在beforeEnter中设置元素
+					//开始动画之前的起始样式,起始的位置
+					el.style.transform="translate(0,0)"
+				},
+				enter(el,done){
+					el.offsetWidth
+					//enter表示动画开始之后的样式,这里可以设置小球完成动画之后的结束状态
+					el.style.transform="translate(150px,450px)";
+					el.style.transition="all 1s ease"
+					// 这里done其实就是afterEnter函数的引用,立马隐藏调用此方法
+					done()
+				},
+				afterEnter(el){
+					this.flag=!this.flag
+				}
+			}
+		});
+	</script>
+</body>
+</html>
