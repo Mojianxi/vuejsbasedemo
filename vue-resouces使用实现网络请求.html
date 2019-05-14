@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-resource实现ajax</title>
+	<script type="text/javascript" src="./lib/vue-2.4.0.js"></script>
+	<!-- v-resource依赖vue -->
+	<script type="text/javascript" src="./lib/vue-resource-1.3.4.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="get请求" @click="getInfo">
+		<input type="button" value="post请求" @click="postInfo">
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:'#app',
+			data:{},
+			methods:{
+				getInfo(){
+					this.$http.get('https://www.apiopen.top/journalismApi').then(function (result) {
+						console.log(result.data);
+					})
+				},
+				postInfo(){
+					this.$http.post('https://www.apiopen.top',{},{emulateJSON:true}).then(result=>{
+						console.log(result.body)
+					})
+				},
+				jsonpInfo(){
+					this.$http.jsonp('https://www.apiopen.top/journalismApi').then(result=>{
+						console.log(result.body)
+					})
+				}
+			}
+		});
+	</script>
+</body>
+</html>
