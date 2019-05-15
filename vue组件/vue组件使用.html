@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义组件</title>
+	<script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- 自定义组件使用 -->
+		<my-com1></my-com1>
+		<my-com2></my-com2>
+	</div>
+	<script type="text/javascript">
+		//使用Vue.extend来创建全局的Vue组件
+		var com1=Vue.extend({
+			template:'<h3>这是vue.extend扩展组件</h3>'
+		})
+		//使用Vue.component创建的组件模板对象,驼峰命名组件在使用时不能用大写字母,需要加-
+		Vue.component('myCom1',com1);
+		// template可以指向元素id
+		// Vue.component('myCom2',Vue.extend({
+		Vue.component('myCom2',{
+			template:"<h6>第二种组件定义方法----{{msg}}</h6>",
+			data:function() {
+				return {
+					msg:'这是组件中的data数据'
+				}
+			}
+		});
+		var vm=new Vue({
+			el:'#app',
+			id:'',
+			name:'',
+			data:{
+				
+			},
+			methods:{
+				
+			},
+			components:{//定义实例内部私有组件
+				login:{
+					template:"<h1>内部私有组件</h1>"
+				}
+			}
+		})
+	</script>
+</body>
+</html>

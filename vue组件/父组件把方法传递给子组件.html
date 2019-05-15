@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父组件把方法传递给子组件</title>
+	<script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+	<div id="app">
+		<com2 @func="show"></com2>
+	</div>
+	<template id="tmpl">
+		<div>
+			<h1>这是子组件</h1>
+			<input type="button" value="子组件按钮触发父组件方法" @click="myclick">
+		</div>
+	</template>
+	<script type="text/javascript">
+		var com2={
+			template:'#tmpl',
+			data(){
+				return {
+					sonmsg:{name:'小头儿子',age:6}
+				}
+			},
+			methods:{
+				myclick(){
+					//当点击子组件的按钮的时候,如何拿到父组件传递过来的func方法,并调用
+					// emit触发调用
+					this.$emit('func',12311,this.sonmsg)
+				}
+			}
+		}
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				datamsgFromson:null
+			},
+			methods:{
+				show(data,mysonmsg){
+					console.log('调用了父组件身上的show方法'+data)
+					this.datamsgFromson=mysonmsg
+				}
+			},
+			components:{
+				com2
+			}
+		});
+	</script>
+</body>
+</html>
