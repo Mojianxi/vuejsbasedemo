@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父子组件之间传递值</title>
+	<script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+	<script type="text/javascript" src="../lib/vue-router-3.0.1.js"></script>
+</head>
+<body>
+	<div id="app">
+		<com1 v-bind:parentmsg="msg" @func="getMsgFromSon">
+			
+		</com1>
+	</div>
+	<template id="tmpl">
+		<div>
+			<h1>这是子元素---{{parentmsg}}</h1>
+			<input type="button" value="向父组件传递消息" @click="sendMsg">
+		</div>
+	</template>
+	<script type="text/javascript">
+		var com1={
+			template:'#tmpl',
+			data(){
+				return {
+					msg:'做一个孝顺的人'
+				}
+			},
+			props:['parentmsg'],
+			methods:{
+				sendMsg(){
+					this.$emit('func',this.msg)
+				}
+			}
+		}
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				msg:'这是父组件中的数据',
+				msgFromSOn:''
+			},
+			methods:{
+				getMsgFromSon(data){
+					this.msgFromSOn=data
+					console.log(this.msgFromSOn)
+				}
+			},
+			components:{
+				com1
+			}
+		})
+	</script>
+</body>
+</html>

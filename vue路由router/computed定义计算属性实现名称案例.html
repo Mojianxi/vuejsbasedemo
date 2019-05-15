@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>computed名称案例</title>
+	<script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+	<script type="text/javascript" src="../lib/vue-router-3.0.1.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- <input type="text" v-model="firstname" @keyup="getFullName">+
+		<input type="text" v-model="lastname" @keyup="getFullName">= -->
+		<input type="text" v-model="firstname">+
+		<input type="text" v-model="lastname">=
+		<input type="text" v-model="fullname">
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:'#app',
+			data:{
+				firstname:'',
+				lastname:''
+			},
+			methods:{
+			},
+			computed:{//在computed中可以定义一些属性,这些属性叫做计算属性,计算属性的本质就是一个方法
+				'fullname':function() {
+					return this.firstname+'-'+this.lastname
+				}
+			}
+		});
+	</script>
+</body>
+</html>
